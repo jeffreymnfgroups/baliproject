@@ -42,9 +42,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ projectName }) => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const howHeardOptions = [ 'Website', 'Social Media', 'Referral', 'Advertisement', 'Other' ];
-  const projectOptions = { 
-    Emaar: ['Panorama', 'The Views', 'Park Edge', 'Coral Towers', 'Pearl & Reef Towers'],
-    HMR: ['AA Waterfront', 'Gold Crest Residence', 'H&S Residence', 'H1 Tower', 'Saima Marina', 'Saima Waterfront', 'Beach Terraces By Metro']
+  const projectOptions = {
+    'Sports & Recreation': ['Hero Aerial View', 'Waterpark', 'Dual Surf Machines', 'Beach Sports Arena', 'Racquet Sports Complex', 'Extreme Sports Zone', 'Digital Sports'],
+    'Wellness & Recovery': ['Wellness and Fitness Zones', 'Spa and Recovery Centre', 'Food, Beverage and Culinary Experience', 'Eco-Accommodation and Lodging', 'Sustainability and Environmental Responsibility', 'Community and Job Creation', 'Partnerships and Global Recognition']
   };
 
   useEffect(() => {
@@ -206,8 +206,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ projectName }) => {
                                         className="w-full px-4 py-3.5 border border-neutral-300 hover:border-neutral-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent appearance-none cursor-pointer transition-all duration-200 bg-neutral-50 focus:bg-white"
                                       >
                                         <option value="">Any project</option>
-                                        <optgroup label="Emaar">{projectOptions.Emaar.map(p => <option key={p} value={p}>{p}</option>)}</optgroup>
-                                        <optgroup label="HMR">{projectOptions.HMR.map(p => <option key={p} value={p}>{p}</option>)}</optgroup>
+                                        <optgroup label="Sports & Recreation">{projectOptions['Sports & Recreation'].map((p: string) => <option key={p} value={p}>{p}</option>)}</optgroup>
+                                        <optgroup label="Wellness & Recovery">{projectOptions['Wellness & Recovery'].map((p: string) => <option key={p} value={p}>{p}</option>)}</optgroup>
                                         <option value="Multiple projects">Multiple projects</option>
                                         <option value="Not sure">Not sure</option>
                                       </select>
@@ -303,7 +303,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ projectName }) => {
                   <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-neutral-200 shadow-lg inline-block">
                       <p className="text-neutral-700 mb-4 font-medium">Prefer to talk directly?</p>
                       <a 
-                        href="https://wa.me/923360878079?text=Hi! I'm interested in learning more about BYG properties." 
+                        href="https://wa.me/6281234567890?text=Hi! I'm interested in learning more about BYG properties." 
                         className="inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105 shadow-md hover:shadow-lg"
                       >
                         <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">

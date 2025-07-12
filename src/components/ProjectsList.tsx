@@ -1,4 +1,4 @@
-// src/components/ProjectsList.tsx - Fixed image display issue
+// src/components/ProjectsList.tsx - Bali Beach Sports & Recreation Facility
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -72,7 +72,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
       threshold: [0.3, 0.7] // Multiple thresholds for better detection
     };
 
-    observerRef.current = new IntersectionObserver((entries) => {
+    observerRef.current = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
       // Only process if not currently scrolling programmatically
       if (isScrolling) return;
 
@@ -80,7 +80,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
       let mostVisibleEntry: IntersectionObserverEntry | null = null;
 
       // Find the most visible section
-      entries.forEach(entry => {
+      entries.forEach((entry: IntersectionObserverEntry) => {
         if (entry.intersectionRatio > maxIntersectionRatio) {
           maxIntersectionRatio = entry.intersectionRatio;
           mostVisibleEntry = entry;
@@ -143,12 +143,12 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
     e.preventDefault();
     const section = link.getAttribute('href')?.substring(1);
     
-    if (section === 'emaar') {
+    if (section === 'facility-overview') {
       scrollToProject(0);
-    } else if (section === 'hmr') {
-      const hmrIndex = projects.findIndex(p => p.location === 'HMR');
-      if (hmrIndex !== -1) {
-        scrollToProject(hmrIndex);
+    } else if (section === 'attractions') {
+      const attractionIndex = projects.findIndex(p => p.location === 'Centrepiece Attraction');
+      if (attractionIndex !== -1) {
+        scrollToProject(attractionIndex);
       }
     } else if (section?.startsWith('project-')) {
       // Handle direct project links
@@ -173,23 +173,28 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
     }
   }, [currentIndex, projects.length, scrollToProject, isScrolling]);
 
-  // Generate project URL
+  // Generate project URL - Special handling for project ID 15 (Call to Action)
   const getProjectUrl = useCallback((project: Project) => {
+    // Special case: Project ID 15 redirects to about page
+    if (project.id === 15) {
+      return '/about';
+    }
     return `/projects/${project.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-')}`;
   }, []);
 
   // Smart image handling based on project characteristics
   const getImageConfig = (project: Project) => {
     // Vertical/Portrait images - need portrait containers
-    const verticalProjects = ['H1 Tower'];
+    const verticalProjects = ['Hero Aerial View', 'Spa and Recovery Centre'];
     
     // Wide panoramic images - work better with object-contain
-    const panoramicProjects = ['Pearl & Reef Towers', 'The Views'];
+    const panoramicProjects = ['Waterpark', 'Beach Sports Arena', 'Sustainability and Environmental Responsibility'];
     
     // Standard landscape images - work fine with object-cover
-    const standardProjects = ['Panorama', 'Park Edge', 'Coral Towers', 'AA Waterfront', 
-                             'Gold Crest Residence', 'H&S Residence', 'Saima Marina', 
-                             'Saima Waterfront', 'Beach Terraces'];
+    const standardProjects = ['Dual Surf Machines', 'Racquet Sports Complex', 'Extreme Sports Zone', 
+                             'Digital Sports', 'Wellness and Fitness Zones', 'Food, Beverage and Culinary Experience',
+                             'Eco-Accommodation and Lodging', 'Community and Job Creation', 
+                             'Partnerships and Global Recognition', 'Final Section / Call to Action'];
 
     if (verticalProjects.includes(project.name)) {
       return { 
@@ -263,7 +268,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
           }}
           className={`
             min-h-screen w-full flex items-center justify-center relative
-            ${index % 2 === 1 ? 'bg-neutral-50' : 'bg-white'}
+            ${index % 2 === 1 ? 'bg-gradient-to-br from-blue-50 to-cyan-50' : 'bg-white'}
             transition-colors duration-300
           `}
           id={`project-${project.id}`}
@@ -280,12 +285,31 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
               <span className="text-sm text-neutral-500 font-medium">
                 {project.number}
               </span>
-              <h2 className="text-7xl font-semibold leading-tight text-neutral-800 m-0">
-                {project.name}
+              <h2 className="text-5xl lg:text-7xl font-semibold leading-tight text-[#1e3a8a] m-0">
+                {project.headline || project.name}
               </h2>
               <p className="text-lg text-neutral-600 font-normal">
-                {project.location}
+                {project.subheadline || project.location}
               </p>
+              {project.description && (
+                <p className="text-sm text-neutral-500 leading-relaxed">
+                  {project.description}
+                </p>
+              )}
+              
+              {/* Mobile View Details Button */}
+              <div className="mt-6 lg:hidden">
+                <a 
+                  href={getProjectUrl(project)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-black hover:bg-gray-800 text-white no-underline 
+                    rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
+                >
+                  <span>{project.id === 15 ? 'About Us' : 'View Details'}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
             </div>
             
             {/* Smart Image Container - Adapts to each project's image characteristics */}
@@ -343,11 +367,13 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
             <div className="col-span-full text-center mt-10 hidden lg:block">
               <a 
                 href={getProjectUrl(project)}
-                className="inline-block px-10 py-4 bg-[#121212] text-white no-underline 
-                  rounded-lg font-medium transition-all duration-300 hover:bg-black 
-                  hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
+                className="inline-flex items-center gap-2 px-10 py-4 bg-black hover:bg-gray-800 text-white no-underline 
+                  rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
               >
-                View Project Details
+                <span>{project.id === 15 ? 'About Us' : 'View Details'}</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </a>
             </div>
           </div>

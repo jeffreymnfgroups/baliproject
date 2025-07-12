@@ -1,4 +1,4 @@
-// src/components/Navigation.tsx - Updated with new WhatsApp message
+// src/components/Navigation.tsx - Updated for Bali Beach Sports & Recreation Facility
 import React, { useState, useEffect } from 'react';
 import { getProjectCounts } from '../data/projects.js';
 import logoImage from '../assets/projects/logo.webp';
@@ -9,7 +9,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [projectCounts, setProjectCounts] = useState({ emaar: 5, hmr: 7 }); // Default values to prevent layout shift
+  const [projectCounts, setProjectCounts] = useState({ 'Facility Overview': 1, 'Centrepiece Attraction': 1 }); // Default values to prevent layout shift
   const [isClient, setIsClient] = useState(false);
   
 
@@ -90,8 +90,8 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const message = "Hi! I'm interested in learning more about EMAAR & HMR waterfront properties. Could you please provide me with more information?";
-    const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
+    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility. Could you please provide me with more information about this revolutionary sports and wellness destination?";
+    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     
     // Close mobile menu if open
@@ -112,7 +112,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
             {/* Logo Image with fixed dimensions to prevent layout shift */}
             <img 
               src={logoImage.src} 
-              alt="BYG Logo" 
+              alt="Bali Beach Sports Logo" 
               className="h-8 w-auto transition-all duration-300 group-hover:brightness-110"
               width="24"
               height="24"
@@ -128,19 +128,19 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
               isHomePage ? 'text-black' : 'text-neutral-500'
             }`}
           >
-            Projects
+            Facilities
           </a>
           <a 
             href="/#project-1" 
             className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-black whitespace-nowrap"
           >
-            Emaar
+            Sports & Recreation
           </a>
           <a 
             href="/#project-6" 
             className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-black whitespace-nowrap"
           >
-            HMR Waterfront
+            Wellness & Recovery
           </a>
         </div>
 
@@ -206,7 +206,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
             }`}
             onClick={closeMenu}
           >
-            Projects
+            Facilities
           </a>
           <a
             href="/#project-1"
@@ -215,9 +215,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
               hover:text-black hover:translate-x-[5px]"
             onClick={closeMenu}
           >
-            Emaar
+            Sports & Recreation
             <span className="bg-neutral-600 text-white text-xs font-semibold px-2 py-1 rounded-xl min-w-[20px] text-center">
-              {projectCounts.emaar}
+              {projectCounts['Facility Overview'] || 8}
             </span>
           </a>
           <a
@@ -227,9 +227,9 @@ const Navigation: React.FC<NavigationProps> = ({ currentPath }) => {
               hover:text-black hover:translate-x-[5px]"
             onClick={closeMenu}
           >
-            HMR Waterfront
+            Wellness & Recovery
             <span className="bg-neutral-600 text-white text-xs font-semibold px-2 py-1 rounded-xl min-w-[20px] text-center">
-              {projectCounts.hmr}
+              {projectCounts['Centrepiece Attraction'] || 7}
             </span>
           </a>
           <a

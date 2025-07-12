@@ -11,6 +11,9 @@ export interface Project {
   name: string;
   location: string;
   image: ImageMetadata; // Use Astro's ImageMetadata directly
+  headline?: string; // Optional headline for facility zones
+  subheadline?: string; // Optional subheadline for facility zones
+  description?: string; // Optional description for facility zones
 }
 
 // Animation elements interface

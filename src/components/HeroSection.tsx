@@ -69,7 +69,11 @@ const HeroSection: React.FC = () => {
             maxWidth: '80vw' // On mobile, max width is 80% of viewport width
           }}
         >
-          Official Partners With EMAAR® Oceanfront & HMR® Waterfront
+          <div className="text-center mb-8">
+            <p className="text-sm font-medium text-neutral-600 uppercase tracking-wider mb-2">
+              Official Partners With World-Class Sports Technology & Wellness Leaders
+            </p>
+          </div>
         </div>
       </div>
     </main>

@@ -1,4 +1,4 @@
-// src/components/Policy/PolicyPage.tsx - Updated with new WhatsApp message
+// src/components/Policy/PolicyPage.tsx - Updated for Bali Beach Sports & Recreation Facility
 import React, { useEffect, useRef } from 'react';
 
 const PolicyPage: React.FC = () => {
@@ -25,8 +25,8 @@ const PolicyPage: React.FC = () => {
   }, []);
 
   const handleContactClick = () => {
-    const message = "Hi! I'm interested in learning more about EMAAR & HMR waterfront properties. Could you please provide me with more information?";
-    const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
+    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility. Could you please provide me with more information about this revolutionary sports and wellness destination?";
+    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -72,9 +72,9 @@ const PolicyPage: React.FC = () => {
             <div className="bg-neutral-50 rounded-xl p-8 border border-neutral-100">
               <h2 className="text-2xl font-semibold text-[#4c4c4c] mb-4">Introduction</h2>
               <p className="text-neutral-700 leading-relaxed">
-                BinYousuf Group ("we," "our," or "us") respects your privacy and is committed to protecting your personal information. 
+                Bali Beach Sports & Recreation Facility ("we," "our," or "us") respects your privacy and is committed to protecting your personal information. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, 
-                use our services, or interact with us in connection with our real estate services.
+                use our services, or interact with us in connection with our sports and wellness tourism services.
               </p>
             </div>
           </div>
@@ -94,9 +94,9 @@ const PolicyPage: React.FC = () => {
                 </p>
                 <ul className="list-disc list-inside text-neutral-700 space-y-2 ml-4">
                   <li>Name, email address, and phone number</li>
-                  <li>Property preferences and investment requirements</li>
+                  <li>Sports preferences and wellness requirements</li>
                   <li>Communication history and inquiry details</li>
-                  <li>Financial information for property transactions (when applicable)</li>
+                  <li>Booking information for sports activities and wellness services (when applicable)</li>
                 </ul>
               </div>
 
@@ -131,7 +131,7 @@ const PolicyPage: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-[#4c4c4c] mb-2">Service Delivery</h3>
                 <p className="text-neutral-600 text-sm">
-                  To provide real estate services, respond to inquiries, and facilitate property transactions.
+                  To provide sports and wellness services, respond to inquiries, and facilitate bookings and activities.
                 </p>
               </div>
 
@@ -143,7 +143,7 @@ const PolicyPage: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-[#4c4c4c] mb-2">Communication</h3>
                 <p className="text-neutral-600 text-sm">
-                  To communicate with you about properties, updates, and respond to your questions.
+                  To communicate with you about facilities, activities, updates, and respond to your questions.
                 </p>
               </div>
 
@@ -184,7 +184,7 @@ const PolicyPage: React.FC = () => {
                 We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except in the following circumstances:
               </p>
               <ul className="list-disc list-inside text-neutral-700 space-y-2 ml-4">
-                <li><strong>Partner Developers:</strong> We may share your information with Emaar and HMR as our official partners to facilitate property inquiries and transactions.</li>
+                <li><strong>Sports Partners:</strong> We may share your information with our sports technology partners and wellness providers to enhance your experience and facilitate activities.</li>
                 <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our website and conducting business.</li>
                 <li><strong>Legal Requirements:</strong> We may disclose information when required by law or to protect our rights, property, or safety.</li>
               </ul>

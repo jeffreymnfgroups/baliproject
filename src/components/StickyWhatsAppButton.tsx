@@ -51,8 +51,8 @@ const StickyWhatsAppButton: React.FC = () => {
       });
     }
 
-    const message = "Hi! I'm interested in learning more about EMAAR & HMR waterfront properties. Could you please provide me with more information?";
-    const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
+    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility. Could you please provide me with more information about this revolutionary sports and wellness destination?";
+    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 

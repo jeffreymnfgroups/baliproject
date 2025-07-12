@@ -1,4 +1,4 @@
-// src/components/ProjectsSidebar.tsx - Fixed with click functionality
+// src/components/ProjectsSidebar.tsx - Bali Beach Sports & Recreation Facility
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -183,11 +183,11 @@ const ProjectsSidebar: React.FC<ProjectsSidebarProps> = ({ currentPath, isVisibl
           {project.number}
         </span>
         <div className="flex-1">
-          <h4 className="text-[13px] font-medium text-neutral-800 mb-[3px] leading-[1.4]">
-            {project.name}
+          <h4 className="text-[13px] font-medium text-[#1e3a8a] mb-[3px] leading-[1.4]">
+            {project.headline || project.name}
           </h4>
           <p className="text-[11px] text-neutral-500 leading-[1.3]">
-            {project.location}
+            {project.subheadline || project.location}
           </p>
         </div>
       </>
@@ -196,8 +196,8 @@ const ProjectsSidebar: React.FC<ProjectsSidebarProps> = ({ currentPath, isVisibl
     const className = `
       flex items-start p-[12px_8px] cursor-pointer 
       transition-all duration-300 rounded-none relative mb-1
-      hover:bg-black/5 hover:translate-x-[5px]
-      ${isActive ? 'bg-black/[0.08] translate-x-[5px]' : ''}
+      hover:bg-blue-50 hover:translate-x-[5px]
+      ${isActive ? 'bg-blue-100 translate-x-[5px]' : ''}
     `;
 
     // Always use click handler for staying on the same page
@@ -215,7 +215,7 @@ const ProjectsSidebar: React.FC<ProjectsSidebarProps> = ({ currentPath, isVisibl
             handleProjectClick(project);
           }
         }}
-        aria-label={`Scroll to ${project.name} project`}
+        aria-label={`Scroll to ${project.name} facility zone`}
       >
         {itemContent}
       </div>
@@ -227,16 +227,16 @@ const ProjectsSidebar: React.FC<ProjectsSidebarProps> = ({ currentPath, isVisibl
       ref={sidebarRef}
       className={`
         fixed left-[5vw] top-[15vh] w-[400px] max-h-[70vh] 
-        bg-white/95 backdrop-blur-[20px] -rounded-2xl p-[30px_25px]
+        bg-white/95 backdrop-blur-[20px] rounded-2xl p-[30px_25px]
         z-[5] transition-all duration-500 overflow-y-auto
-        -shadow-[0_20px_60px_rgba(0,0,0,0.1)] custom-scrollbar
+        shadow-[0_20px_60px_rgba(0,0,0,0.1)] custom-scrollbar
         will-change-[opacity,transform] hidden lg:block
         ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[100px]'}
       `}
       id="projectsSidebar"
     >
       <div className="flex justify-between items-center mb-[25px] pb-[15px] border-b border-black/10">
-        <h3 className="text-base font-semibold text-neutral-800">Projects</h3>
+        <h3 className="text-base font-semibold text-[#1e3a8a]">Facility Zones</h3>
       </div>
 
       <div className="flex flex-col">

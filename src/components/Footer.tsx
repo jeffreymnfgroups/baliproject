@@ -1,10 +1,7 @@
-// src/components/Footer.tsx
 import React from 'react';
-import { projects, getProjectCounts } from '../data/projects.js';
 import logoImage from '../assets/projects/logo.webp';
 
 const Footer: React.FC = () => {
-  const projectCounts = getProjectCounts();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -31,7 +28,7 @@ const Footer: React.FC = () => {
               <div className="mb-8">
                 <img 
                   src={logoImage.src} 
-                  alt="BinYousuf Group Logo" 
+                  alt="Bali Beach Sports Logo" 
                   className="h-16 w-auto mb-6"
                   style={{filter: 'brightness(0.2)'}}
                 />
@@ -39,21 +36,21 @@ const Footer: React.FC = () => {
                 {/* Google Maps Iframe - Full Interactive Map */}
                 <div className="relative rounded-lg overflow-hidden h-48 w-full shadow-lg">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14460.816326988188!2d67.29673298089614!3d25.027147338248188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb34ba7aedde237%3A0xef200ee78d0e7246!2sMidway%20Commercial-B%2C%20Bahria%20Town%20Karachi!5e0!3m2!1sen!2s!4v1752291903438!5m2!1sen!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.159767178711!2d115.16014431535407!3d-8.670689193779304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23f7b3c1b7b4b%3A0x7e8f0b8c8f8c8f8c!2sKuta%20Beach!5e0!3m2!1sen!2sid!4v1698765432109!5m2!1sen!2sid"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen={true}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="BinYousuf Group Office Location - Midway Commercial-B, Bahria Town Karachi"
+                    title="Bali Beach Sports Location - Kuta Beach, Bali"
                     className="w-full h-full"
                   ></iframe>
                   
                   {/* View Larger Map Overlay Link */}
                   <div className="absolute top-2 left-2">
                     <a 
-                      href="https://maps.app.goo.gl/MwwtfoP37kS9s5EW6" 
+                      href="https://maps.app.goo.gl/8Y7Z3X9Z9Z9Z9Z9Z9" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-xs bg-white px-2 py-1 rounded shadow text-blue-600 hover:text-blue-800 transition-colors font-medium"
@@ -65,69 +62,59 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            {/* Pages Column */}
+            {/* Quick Links Column */}
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-6 uppercase tracking-wider">
-                PAGES
+                QUICK LINKS
               </h3>
               <nav className="space-y-4">
                 <a 
-                  href="/projects/panorama" 
+                  href="/" 
                   className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
                 >
-                  Panorama
+                  Facilities
                 </a>
                 <a 
-                  href="/projects/aa-waterfront" 
+                  href="/about" 
                   className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
                 >
-                  AA Waterfront
+                  About Us
                 </a>
                 <a 
-                  href="/projects/the-views" 
+                  href="/privacy-policy" 
                   className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
                 >
-                  The Views
-                </a>
-                <a 
-                  href="/projects/coral" 
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  Coral
-                </a>
-                <a 
-                  href="/projects/pear-reef-towers" 
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  Pear Reef Towers
+                  Privacy Policy
                 </a>
               </nav>
             </div>
 
-            {/* Follow Us Column */}
+            {/* Contact Column */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-6 uppercase tracking-wider">
+                CONTACT
+              </h3>
+              <nav className="space-y-4">
+                <a 
+                  href="mailto:info@balibeachsports.com"
+                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
+                >
+                  info@balibeachsports.com
+                </a>
+                <span className="block text-gray-600 text-sm">
+                  +62 812 3456 7890
+                </span>
+              </nav>
+            </div>
+
+            {/* Social Column */}
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-6 uppercase tracking-wider">
                 FOLLOW US
               </h3>
               <nav className="space-y-4">
                 <a 
-                  href="https://www.linkedin.com/company/binyousuf-group" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  LinkedIn
-                </a>
-                <a 
-                  href="https://www.instagram.com/binyousuf.group" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  Instagram
-                </a>
-                <a 
-                  href="https://www.facebook.com/binyousufgroup" 
+                  href="https://www.facebook.com/balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
@@ -135,39 +122,28 @@ const Footer: React.FC = () => {
                   Facebook
                 </a>
                 <a 
-                  href="https://www.youtube.com/@binyousufgroup" 
+                  href="https://www.instagram.com/balibeachsports" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
+                >
+                  Instagram
+                </a>
+                <a 
+                  href="https://www.linkedin.com/company/balibeachsports" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
+                >
+                  LinkedIn
+                </a>
+                <a 
+                  href="https://www.youtube.com/@balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
                 >
                   YouTube
-                </a>
-                <a 
-                  href="mailto:info@binyousufgroup.com"
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  info@binyousufgroup.com
-                </a>
-              </nav>
-            </div>
-
-            {/* Legal Column */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-6 uppercase tracking-wider">
-                LEGAL
-              </h3>
-              <nav className="space-y-4">
-                <a 
-                  href="/privacy-policy" 
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  Privacy Policy
-                </a>
-                <a 
-                  href="/terms-conditions" 
-                  className="block text-gray-600 hover:text-gray-800 transition-colors duration-300 text-sm hover:translate-x-1 transform"
-                >
-                  Terms & Conditions
                 </a>
               </nav>
             </div>
@@ -179,16 +155,8 @@ const Footer: React.FC = () => {
               
               {/* Copyright */}
               <div className="text-sm text-gray-600">
-                © {currentYear} BinYousuf Group™ with{' '}
-                <span className="text-red-600">❤</span> from{' '}
-                <a 
-                  href="https://otherdev.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-700 hover:text-gray-900 transition-colors duration-300 underline hover:no-underline"
-                >
-                  The Other Dev
-                </a>
+                © {currentYear} Bali Beach Sports & Recreation Facility™ with{' '}
+                <span className="text-red-600">❤</span> in Bali
               </div>
 
               {/* Social Media Icons */}
@@ -196,7 +164,7 @@ const Footer: React.FC = () => {
                 
                 {/* Facebook */}
                 <a 
-                  href="https://www.facebook.com/binyousufgroup" 
+                  href="https://www.facebook.com/balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-blue-600 transition-all duration-300 p-2 rounded hover:bg-blue-100 hover:scale-110 transform"
@@ -212,7 +180,7 @@ const Footer: React.FC = () => {
 
                 {/* Instagram */}
                 <a 
-                  href="https://www.instagram.com/binyousuf.group" 
+                  href="https://www.instagram.com/balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-pink-600 transition-all duration-300 p-2 rounded hover:bg-pink-100 hover:scale-110 transform"
@@ -224,7 +192,7 @@ const Footer: React.FC = () => {
 
                 {/* LinkedIn */}
                 <a 
-                  href="https://www.linkedin.com/company/binyousuf-group" 
+                  href="https://www.linkedin.com/company/balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-blue-600 transition-all duration-300 p-2 rounded hover:bg-blue-100 hover:scale-110 transform"
@@ -236,7 +204,7 @@ const Footer: React.FC = () => {
 
                 {/* YouTube */}
                 <a 
-                  href="https://www.youtube.com/@binyousufgroup" 
+                  href="https://www.youtube.com/@balibeachsports" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-red-600 transition-all duration-300 p-2 rounded hover:bg-red-100 hover:scale-110 transform"

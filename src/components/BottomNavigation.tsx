@@ -1,55 +1,57 @@
-// src/components/BottomNavigation.tsx - Updated for new homepage structure
-import React, { useEffect, useState } from 'react';
+// src/components/BottomNavigation.tsx - Updated for Bali Beach Sports & Recreation Facility
+import React, { useState, useEffect } from 'react';
 import { getProjectCounts } from '../data/projects.js';
 
 interface BottomNavigationProps {
-  currentPath: string;
+  currentSection: string;
+  onSectionChange: (section: string) => void;
 }
 
-const BottomNavigation: React.FC<BottomNavigationProps> = ({ currentPath }) => {
-  const [projectCounts, setProjectCounts] = useState({ emaar: 0, hmr: 0 });
-  const isHomePage = currentPath === '/' || currentPath === '';
+const BottomNavigation: React.FC<BottomNavigationProps> = ({ currentSection, onSectionChange }) => {
+  const [projectCounts, setProjectCounts] = useState({ 'Sports & Recreation': 0, 'Wellness & Recovery': 0 });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const counts = getProjectCounts();
-    setProjectCounts(counts);
+    setIsClient(true);
   }, []);
 
+  useEffect(() => {
+    if (isClient) {
+      const counts = getProjectCounts();
+      setProjectCounts({
+        'Sports & Recreation': counts['Facility Overview'] || 8,
+        'Wellness & Recovery': counts['Centrepiece Attraction'] || 7
+      });
+    }
+  }, [isClient]);
+
   return (
-    <div className="fixed bottom-10 left-10 flex gap-10 z-10 flex-wrap md:bottom-5 md:left-5 md:gap-5">
-      {isHomePage ? (
-        <>
-          <a 
-            href="#project-1" 
-            className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-neutral-800 no-underline"
-            data-section="emaar"
-          >
-            Emaar <sup className="text-[10px] ml-0.5">{projectCounts.emaar}</sup>
-          </a>
-          <a 
-            href="#project-6" 
-            className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-neutral-800 no-underline"
-            data-section="hmr"
-          >
-            HMR <sup className="text-[10px] ml-0.5">{projectCounts.hmr}</sup>
-          </a>
-        </>
-      ) : (
-        <>
-          <a 
-            href="/#project-1" 
-            className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-neutral-800 no-underline"
-          >
-            Emaar <sup className="text-[10px] ml-0.5">{projectCounts.emaar}</sup>
-          </a>
-          <a 
-            href="/#project-6" 
-            className="text-neutral-500 text-sm font-normal transition-colors duration-300 hover:text-neutral-800 no-underline"
-          >
-            HMR <sup className="text-[10px] ml-0.5">{projectCounts.hmr}</sup>
-          </a>
-        </>
-      )}
+    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-[10px] border-t border-black/10 z-[1000] md:hidden">
+      <div className="flex justify-around items-center py-3">
+        <button
+          onClick={() => onSectionChange('sports')}
+          className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 ${
+            currentSection === 'sports' ? 'text-black bg-neutral-100' : 'text-neutral-500'
+          }`}
+          data-section="sports"
+        >
+          <span className="text-xs font-medium">
+            Sports & Recreation <sup className="text-[10px] ml-0.5">{projectCounts['Sports & Recreation'] || 8}</sup>
+          </span>
+        </button>
+        
+        <button
+          onClick={() => onSectionChange('wellness')}
+          className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-all duration-300 ${
+            currentSection === 'wellness' ? 'text-black bg-neutral-100' : 'text-neutral-500'
+          }`}
+          data-section="wellness"
+        >
+          <span className="text-xs font-medium">
+            Wellness & Recovery <sup className="text-[10px] ml-0.5">{projectCounts['Wellness & Recovery'] || 7}</sup>
+          </span>
+        </button>
+      </div>
     </div>
   );
 };

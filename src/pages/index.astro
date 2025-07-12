@@ -1,5 +1,5 @@
 ---
-// src/pages/index.astro - Enhanced with SEO optimization
+// src/pages/index.astro - Enhanced with SEO optimization for Bali Beach Sports & Recreation Facility
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.tsx';
 import ProjectsList from '../components/ProjectsList.tsx';
@@ -9,17 +9,20 @@ import type { ImageMetadata } from 'astro';
 
 const currentPath = Astro.url.pathname;
 
-// Enhanced SEO meta data
+// Enhanced SEO meta data for Bali Beach Sports & Recreation Facility
 const seoData = {
-  title: "BinYousuf Group - Luxury Waterfront Properties Karachi | Emaar & HMR Official Partner",
-  description: "BinYousuf Group (BYG) - Official sales partners of Emaar Oceanfront & HMR Waterfront. Discover luxury sea-facing apartments and waterfront properties in DHA Phase 8, Karachi. Expert real estate consultants specializing in premium oceanfront investments.",
-  keywords: "waterfront properties Karachi, Emaar Oceanfront Karachi, HMR Waterfront, luxury apartments Karachi, sea facing apartments DHA Phase 8, BinYousuf Group, real estate Karachi, oceanfront properties Pakistan, luxury real estate investment, DHA Phase 8 properties, waterfront living Karachi",
+  title: "Bali Beach Sports & Recreation Facility - Global Beach Sport & Wellness Tourism",
+  description: "Bali Beach Sports & Recreation Facility - Bali's integrated arena for surf, play, recovery, and community. World-class sports technology with environmental responsibility, creating over 400 jobs while preserving Bali's natural beauty.",
+  keywords: "Bali sports facility, beach sports tourism, URBNSURF Bali, FIVB beach volleyball, extreme sports Bali, wellness tourism, sustainable sports facility, Bali waterpark, surf machines Bali, digital sports hub, eco-accommodation Bali, sports tourism Indonesia",
   image: "/og-image.jpg" // You'll need to create this
 };
 
-// Group projects by location
-const emaarProjects = projects.filter(p => p.location === 'Emaar');
-const hmrProjects = projects.filter(p => p.location === 'HMR');
+// Group projects by category
+const overviewProjects = projects.filter(p => p.location === 'Facility Overview');
+const attractionProjects = projects.filter(p => p.location === 'Centrepiece Attraction');
+const surfProjects = projects.filter(p => p.location === 'URBNSURF + Recreational Waves');
+const sportsProjects = projects.filter(p => p.location === 'Multi-Sport Complex');
+const wellnessProjects = projects.filter(p => p.location === 'Health & Wellness');
 
 // Import slideshow images with better type handling
 const slideshowImageModules = import.meta.glob<{ default: ImageMetadata }>('../assets/projects/slideshow/*.{webp,jpg,jpeg,png}', { eager: true });
@@ -33,7 +36,7 @@ try {
       if (module?.default) {
         return {
           src: module.default.src || module.default,
-          alt: `Luxury Waterfront Property ${index + 1} - BinYousuf Group`
+          alt: `Bali Beach Sports & Recreation Facility ${index + 1} - Global Beach Sport & Wellness Tourism`
         };
       }
       return null;
@@ -48,7 +51,7 @@ try {
 if (formattedSlideshowImages.length === 0) {
   formattedSlideshowImages = projects.slice(0, 5).map((project, index) => ({
     src: project.image.src,
-    alt: `${project.name} - ${project.location} Luxury Waterfront Property`
+    alt: `${project.name} - ${project.location} Bali Beach Sports & Recreation Facility`
   }));
 }
 
@@ -58,25 +61,29 @@ const homepageStructuredData = {
   "@type": "WebPage",
   "name": seoData.title,
   "description": seoData.description,
-  "url": "https://www.binyousufgroup.com/",
+  "url": "https://www.balibeachsports.com/",
   "mainEntity": {
-    "@type": "RealEstateAgent",
-    "name": "BinYousuf Group",
-    "description": "Official sales partners specializing in luxury waterfront properties",
+    "@type": "SportsActivityLocation",
+    "name": "Bali Beach Sports & Recreation Facility",
+    "description": "Integrated arena for surf, play, recovery, and community",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bali",
+      "addressCountry": "Indonesia"
+    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Waterfront Properties Portfolio",
+      "name": "Sports and Recreation Facilities",
       "itemListElement": projects.map((project, index) => ({
         "@type": "Offer",
         "position": index + 1,
         "itemOffered": {
-          "@type": "Apartment",
+          "@type": "SportsActivityLocation",
           "name": project.name,
-          "description": `Luxury ${project.location} waterfront property in Karachi`,
+          "description": project.description,
           "location": {
             "@type": "Place",
-            "name": "Karachi, Pakistan",
-            "address": "DHA Phase 8, Karachi"
+            "name": "Bali, Indonesia"
           }
         }
       }))
@@ -89,7 +96,7 @@ const homepageStructuredData = {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.binyousufgroup.com/"
+        "item": "https://www.balibeachsports.com/"
       }
     ]
   }
@@ -101,7 +108,7 @@ const homepageStructuredData = {
   description={seoData.description}
   keywords={seoData.keywords}
   image={seoData.image}
-  url="https://www.binyousufgroup.com/"
+  url="https://www.balibeachsports.com/"
   type="website"
 >
   <!-- Structured Data for Homepage -->
@@ -110,7 +117,7 @@ const homepageStructuredData = {
   <Navigation currentPath={currentPath} client:load />
   
   <!-- Hero Section with SEO-optimized content -->
-  <section class="w-full mt-10" aria-label="Featured Waterfront Properties">
+  <section class="w-full mt-10" aria-label="Bali Beach Sports & Recreation Facility">
     <ProjectsSlideshow 
       images={formattedSlideshowImages}
       autoPlayInterval={2000}
@@ -123,30 +130,33 @@ const homepageStructuredData = {
   
   <!-- Hidden SEO content for search engines -->
   <div class="sr-only">
-    <h1>BinYousuf Group - Luxury Waterfront Properties in Karachi</h1>
+    <h1>Bali Beach Sports & Recreation Facility - Global Beach Sport & Wellness Tourism</h1>
     <p>
-      Discover premium oceanfront living with BinYousuf Group, the official sales partners 
-      of Emaar Oceanfront and HMR Waterfront in Karachi, Pakistan. We specialize in luxury 
-      sea-facing apartments and waterfront properties in DHA Phase 8, offering unparalleled 
-      investment opportunities in Karachi's most prestigious coastal developments.
+      Welcome to the future of global beach sport & wellness tourism. Bali's integrated arena for surf, play, recovery, and community. 
+      This world-class facility combines cutting-edge sports technology with environmental responsibility, creating over 400 jobs while 
+      preserving Bali's natural beauty through innovative sustainability practices.
     </p>
-    <h2>Featured Waterfront Projects</h2>
+    <h2>Facility Zones and Features</h2>
     <ul>
       {projects.map(project => (
         <li>
-          <strong>{project.name}</strong> - {project.location} luxury waterfront property 
-          featuring premium amenities and stunning sea views in DHA Phase 8, Karachi.
+          <strong>{project.name}</strong> - {project.headline}. {project.subheadline}
         </li>
       ))}
     </ul>
+    <h3>Sustainability and Community Impact</h3>
+    <p>
+      Built for a sustainable tomorrow with ocean water use, solar energy, zero-carbon concrete, and local materials. 
+      Over 400 jobs created with local training and community-led development.
+    </p>
   </div>
   
   <!-- Main Projects Content -->
-  <main class="pt-0" role="main" aria-label="Waterfront Properties Portfolio">
+  <main class="pt-0" role="main" aria-label="Bali Beach Sports & Recreation Facility Zones">
     <ProjectsList 
       projects={projects}
-      emaarProjects={emaarProjects}
-      hmrProjects={hmrProjects}
+      emaarProjects={overviewProjects}
+      hmrProjects={attractionProjects}
       client:load 
     />
   </main>

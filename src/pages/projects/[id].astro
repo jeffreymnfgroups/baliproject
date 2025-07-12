@@ -1,5 +1,5 @@
 ---
-// src/pages/projects/[id].astro - Fixed gallery image loading
+// src/pages/projects/[id].astro - Bali Beach Sports & Recreation Facility
 import type { GetStaticPaths, GetStaticPathsResult } from "astro";
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
 import type { ProjectData } from '../../types/project';
@@ -13,6 +13,9 @@ interface ProjectInfo {
   name: string;
   location: string;
   image: ImageMetadata;
+  headline?: string;
+  subheadline?: string;
+  description?: string;
 }
 
 // Project-specific content data with proper typing
@@ -24,7 +27,8 @@ interface ProjectContent {
   year: number;
   location: string;
   area: string;
-  priceFrom?: string;
+  features?: string[];
+  sustainability?: string[];
 }
 
 type ProjectContentMap = {
@@ -32,297 +36,358 @@ type ProjectContentMap = {
 };
 
 const projectContent: ProjectContentMap = {
-  'panorama': {
-    description: 'Elevated lifestyle. Karachi address. Panorama residences exude an aura of luxury, and are elegantly designed keeping you and your family in mind.',
-    aboutProject: `Panorama is strategically located in the heart of DHA Phase 8 and is only minutes away from Karachi's top hotspots.
+  'hero-aerial-view': {
+    description: 'High-resolution top-down layout visual of the entire facility showcasing the integrated arena for surf, play, recovery, and community.',
+    aboutProject: `Welcome to the Future of Global Beach Sport & Wellness Tourism. This aerial perspective showcases Bali's integrated arena for surf, play, recovery, and community.
 
-Step out and find yourself on a vibrant promenade offering exceptional dining and retail experiences for the entire family.
-
-Panorama's beauty is nothing short of mesmerising. As soon as you arrive, a tastefully crafted grand entrance welcomes you home. Elegantly designed with contemporary decor, every square inch of Panorama is set to encapsulate you and your family in an aura of architectural splendour.
-
-Emaar's finest architects have left no stone unturned to deliver exquisitely designed residences with an expansive range of amenities at Panorama — to keep your whole family entertained and pampered, every day.
-
-Amenities:
-- Infinity Swimming Pool
-- Kids' Play Areas
-- Fully-Equipped Gym
-- Cinema Screen
-- Business Centre
-- Residents' Lounge
-
-Limited inventory of 1, 2, 3 & 4 bedroom sea-facing apartments. With premium finishing and beach front location, Panorama homes are designed to ensure you and your family long for nothing—with a range of leisure amenities at your doorstep.
-
-Emaar Pakistan's Panorama is on track to become Pakistan's Tallest water front tower.`,
-    typology: ['Residential', 'Sea-Facing Apartments'],
-    status: 'Off-Plan',
-    year: 2026,
-    location: 'Emaar Oceanfront, Karachi',
-    area: '1547 Sq.Ft',
-    priceFrom: '7.9 Crore'
-  },
-  
-  'park-edge': {
-    description: 'Resort lifestyle. Karachi address. Discover a new jewel at Emaar Oceanfront Karachi. Experience luxury living with breathtaking views of Central Park and the Arabian Sea.',
-    aboutProject: `Twin Tower project located at the heart of Emaar Oceanfront, a Mixed-Use development along the coastal belt of Karachi. The project focuses on landscape and community living, surrounded by the serene views of two lush green parks at the project's periphery.
-
-Experience upscale living at Emaar Park Edge. The Project features luxury apartments, stunning views, and top class amenities for a premium lifestyle in DHA Phase 8, Karachi.
-
-Welcome to a haven of elegance, where our state-of-the-art park is the centerpiece of our exceptional amenities. Designed with a keen eye for beauty and functionality, the park offers a green oasis decorated with lush landscapes. Whether you are seeking relaxation or engaging in recreational activities, the park provides the perfect setting for any endeavor.
-
-Every corner invites you to connect with nature and unwind, surrounded by a harmonious blend of modern design and natural splendor, that makes our community truly special.
-
-Amenities:
-- Swimming Pool
-- Kid's Play & Recreational Area
-- Fully-Equipped Gym
-- Business Centre
-- Residents' Lounge
-
-Available Units: 1-4 bedroom apartments and penthouse
-Payment Plan: Flexible 3 year payment plan with 10% down payment and 6.42% for 14 installments.`,
-    typology: ['Residential', 'Twin Towers'],
-    status: 'Off-Plan',
-    year: 2028,
-    location: 'Emaar Oceanfront, Karachi',
-    area: '1,400 Sq.Ft',
-    priceFrom: '5.9 Crore'
-  },
-  
-  'the-views': {
-    description: 'Scenic lifestyle. Karachi address. Experience a new standard of luxury living in DHA Phase 8 as you fall in love with breathtaking sunsets over the Arabian Sea.',
-    aboutProject: `Located in DHA Phase 8 and minutes away from top attractions of Karachi including top schools and hospitals, The Views will be an added jewel in the beauty of the city.
-
-Enter a new realm of luxury with the seascape promenade that offers breathtaking views as you enjoy the many dining options and other activities for the entire family.
-
-The Views encapsulate the beauty, splendor and inspiring scenery that you deserve. With its mesmerizing seascape, stunning entrance, spacious and luxurious interiors with sophisticated finishing, you get the dreamy and moving lifestyle you have always wanted.
-
-From the stunning views of the sea and the city to the majestic architecture combined with an extensive range of amenities. The Views will surely be the home of your dreams.
-
-Amenities:
-- Infinity Swimming Pool
-- Kid's Play & Recreational Area
-- Fully-Equipped Gym
-- Business Centre
-- Residents' Lounge
-
-Limited inventory of 1, 2, 3 & 4 bedroom sea-facing apartments. With premium finishing and beach front location, The Views is designed to ensure you and your family long for nothing—with a range of leisure amenities at your doorstep.`,
-    typology: ['Residential', 'Sea-Facing Apartments'],
-    status: 'Off-Plan',
-    year: 2026,
-    location: 'Emaar Oceanfront, Karachi',
-    area: '1,320 Sq.Ft',
-    priceFrom: '7.3 Crore'
-  },
-  
-  'coral-towers': {
-    description: 'Architectural masterpieces that maximize the uninterrupted sea views that stretch out to the horizon. Coral Towers share exceptional facilities for luxury living.',
-    aboutProject: `Coral Towers are architectural masterpieces that maximize the uninterrupted sea views that stretch out to the horizon. The towers share exceptional facilities, including a large swimming pool and children's paddling pool, a gymnasium, function room and barbecue area.
-
-Available Units: 1-2-3-4 bedroom apartments and townhouses duplex
+The facility spans over 50 hectares of prime beachfront land, designed as a comprehensive sports and wellness destination that serves both local communities and international visitors. The master plan integrates cutting-edge sports technology with environmental responsibility, creating a model for sustainable tourism development.
 
 Key Features:
-- Three High Speed Elevators for Each Tower
-- CCTV Security in Common Areas
-- Mail Box for Each Apartment
-- Voice Communications
-- Fire Protection System for Every Floor and Car Park
-- Tropical Garden Rooms
-- Kids' Splash Pads & Play Area
+- 15 distinct sports and recreation zones
+- Integrated sustainability systems
+- Community-focused design
+- International partnership facilities
+- 24/7 operational capability
+- Over 400 local jobs created
 
-The development offers unparalleled sea views and exceptional facilities designed for modern luxury living with comprehensive security and safety features.`,
-    typology: ['Residential', 'Towers & Townhouses'],
-    status: 'Ready To Move',
-    year: 2025,
-    location: 'Emaar Oceanfront, Karachi',
-    area: 'Various Sizes Available'
-  },
-  
-  'pearl-reef-towers': {
-    description: 'Grand sea-facing residences offering spacious apartments with high ceilings and abundant natural light. A place of peace and tranquility with contemporary design.',
-    aboutProject: `Inside, the apartments are spacious with high ceilings and abundant natural light. Pearl & Reef Towers are a place of peace and tranquility. Polished granite and marble in the kitchens and bathrooms complement the contemporary fittings and faucets.
-
-Available Units: 1-2-3-4 bedroom apartments and penthouses
-
-Key Features:
-- Three High Speed Elevators for Each Tower
-- CCTV Security in Common Areas
-- Mail Box for Each Apartment
-- Voice Communications
-- Fire Protection System for Every Floor and Car Park
-- Tropical Garden Rooms
-- Kids' Splash Pads & Play Area
-
-The towers feature premium finishes with polished granite and marble throughout, creating an atmosphere of luxury and sophistication. Contemporary fittings and faucets complement the high-end design, ensuring residents enjoy the finest in modern living.`,
-    typology: ['Residential', 'Luxury Towers'],
-    status: 'Ready To Move',
+This is not just a resort—it's a revolution in how we approach sports tourism, community development, and environmental stewardship.`,
+    typology: ['Sports Facility', 'Wellness Tourism'],
+    status: 'Under Development',
     year: 2024,
-    location: 'Emaar Oceanfront, Karachi',
-    area: 'Various Sizes Available'
+    location: 'Bali, Indonesia',
+    area: '50+ Hectares',
+    features: ['Aerial Layout Design', 'Master Planning', 'Environmental Integration'],
+    sustainability: ['Solar Energy Systems', 'Water Recycling', 'Local Materials']
   },
   
-  'aa-waterfront': {
-    description: 'AA Waterfront delivers exceptional waterfront living with contemporary design and comprehensive amenities in HMR\'s premium district.',
-    aboutProject: `AA Waterfront represents HMR's commitment to creating exceptional living experiences. This development combines contemporary architectural design with comprehensive lifestyle amenities.
+  'waterpark': {
+    description: 'Water slides, lazy river, kids zones - Bali\'s most iconic water attraction for fun and adventure for all ages.',
+    aboutProject: `Bali's most iconic water attraction designed for fun and adventure for all ages. The waterpark features state-of-the-art water attractions that combine thrill with family-friendly experiences.
 
-Located in HMR's most sought-after waterfront district, residents enjoy direct water access and a full spectrum of recreational and wellness facilities designed for modern family living.
-
-Key Features:
-- Direct waterfront access
-- Family-oriented amenities
-- Contemporary architectural design
-- Comprehensive recreational facilities
-- Water sports facilities
-- Children's education center
-- Multi-generational living options`,
-    typology: ['Residential', 'Waterfront'],
-    status: 'Off-Plan',
-    year: 2023,
-    location: 'HMR Waterfront',
-    area: '20,000 m2'
-  },
-  
-  'gold-crest-residence': {
-    description: 'Gold Crest Residence offers sophisticated urban living with premium finishes and exclusive amenities in the heart of HMR\'s business district.',
-    aboutProject: `Gold Crest Residence exemplifies sophisticated urban living with its prime location in HMR's prestigious business district. This development caters to discerning professionals seeking luxury, convenience, and exceptional investment value.
-
-The residence features premium materials, cutting-edge technology, and thoughtfully designed spaces that reflect contemporary lifestyle preferences while maintaining timeless appeal.
+The facility includes multiple themed zones catering to different age groups and activity levels, from gentle toddler areas to adrenaline-pumping slides for thrill-seekers.
 
 Key Features:
-- Prime business district location
-- Premium interior finishes
-- Executive business facilities
-- Advanced security systems
-- Luxury concierge services
-- Investment-grade properties
-- Professional networking spaces`,
-    typology: ['Residential', 'Executive Living'],
-    status: 'Off-Plan',
-    year: 2023,
-    location: 'HMR Waterfront',
-    area: '16,500 m2'
-  },
-  
-  'hs-residence': {
-    description: 'H&S Residence provides modern family living with spacious layouts and community-focused amenities in a tranquil HMR neighborhood.',
-    aboutProject: `H&S Residence is thoughtfully designed for modern families seeking quality living in a peaceful neighborhood setting. This development prioritizes space, comfort, and community connections.
-
-The project features generous living spaces, family-friendly amenities, and safe outdoor areas where children can play and families can gather, creating a true sense of community.
-
-Key Features:
-- Spacious family-oriented layouts
-- Safe children's play areas
-- Community gathering spaces
-- Educational facilities nearby
-- Public transportation access
-- Local shopping and dining
-- Peaceful neighborhood setting`,
-    typology: ['Residential', 'Family Living'],
-    status: 'Off-Plan',
-    year: 2022,
-    location: 'HMR Waterfront',
-    area: '14,000 m2'
-  },
-  
-  'h1-tower': {
-    description: 'H1 Tower stands as HMR\'s flagship development, offering luxury high-rise living with panoramic city views and world-class amenities.',
-    aboutProject: `H1 Tower represents the pinnacle of HMR's architectural achievement. This flagship high-rise development offers residents an elevated lifestyle with breathtaking panoramic views and comprehensive luxury amenities.
-
-As HMR's signature project, H1 Tower incorporates the finest materials, advanced technologies, and exclusive services to create an unmatched residential experience.
-
-Key Features:
-- Flagship high-rise design
-- Panoramic city and water views
-- Luxury sky amenities
-- Private elevator access
-- Premium building materials
-- 24/7 luxury services
-- Exclusive residents' club`,
-    typology: ['Residential', 'High-Rise Luxury'],
-    status: 'Off-Plan',
+- Multiple themed water zones
+- Advanced water filtration systems
+- Safety-certified attractions
+- Family-friendly design
+- Educational water features
+- Sustainable water management`,
+    typology: ['Water Attractions', 'Family Entertainment'],
+    status: 'Under Development',
     year: 2024,
-    location: 'HMR Waterfront',
-    area: '28,000 m2'
+    location: 'Bali Beach Sports Facility',
+    area: '15,000 m2',
+    features: ['Water Slides', 'Lazy River', 'Kids Zones', 'Wave Pool'],
+    sustainability: ['Water Recycling', 'Energy-Efficient Pumps', 'Natural Filtration']
   },
   
-  'saima-marina': {
-    description: 'Saima Marina offers waterfront luxury with private marina access and comprehensive recreational facilities for the ultimate coastal lifestyle.',
-    aboutProject: `Saima Marina delivers the ultimate coastal lifestyle experience with its prime waterfront location and exclusive marina facilities. This development is designed for residents who appreciate luxury, privacy, and direct water access.
+  'dual-surf-machines': {
+    description: 'Surfers in action — one section for beginners, one for advanced surfers. Ride World-Class Waves in Paradise with two wave systems for every level of surfing.',
+    aboutProject: `Ride World-Class Waves in Paradise with our dual surf machine system powered by URBNSURF technology. This facility offers two distinct wave systems catering to every level of surfing experience.
 
-The project features premium residences with private balconies overlooking the marina, complemented by world-class recreational and wellness facilities.
-
-Key Features:
-- Private marina and yacht berths
-- Waterfront residences with marina views
-- Luxury yacht club facilities
-- Water sports and recreation center
-- Premium dining and entertainment
-- Private beach access
-- Marine lifestyle amenities`,
-    typology: ['Residential', 'Marina Living'],
-    status: 'Off-Plan',
-    year: 2023,
-    location: 'HMR Waterfront',
-    area: '32,000 m2'
-  },
-  
-  'saima-waterfront': {
-    description: 'Saima Waterfront combines elegant design with waterfront living, offering residents serene views and premium lifestyle amenities.',
-    aboutProject: `Saima Waterfront epitomizes elegant waterfront living with its sophisticated design and tranquil location. This development offers residents a peaceful retreat while maintaining access to urban conveniences.
-
-The project emphasizes wellness and relaxation, featuring spa facilities, meditation gardens, and wellness programs designed to enhance residents' quality of life.
+The advanced wave system provides professional-grade waves for experienced surfers, while the recreational system offers gentle, consistent waves perfect for beginners and intermediate surfers.
 
 Key Features:
-- Elegant waterfront architecture
-- Wellness and spa facilities
-- Meditation and zen gardens
-- Waterfront promenades
-- Organic lifestyle amenities
-- Holistic wellness programs
-- Sustainable living features`,
-    typology: ['Residential', 'Wellness Living'],
-    status: 'Off-Plan',
-    year: 2023,
-    location: 'HMR Waterfront',
-    area: '19,000 m2'
-  },
-  
-  'beach-terraces-by-metro': {
-    description: 'Beach Terraces by Metro offers convenient beachfront living with excellent connectivity and modern urban amenities.',
-    aboutProject: `Beach Terraces by Metro combines the best of beachfront living with urban convenience. Located near major transportation hubs, this development offers residents easy access to the city while enjoying beach lifestyle benefits.
-
-The project features terraced design that maximizes ocean views while creating private outdoor spaces for each residence.
-
-Key Features:
-- Beachfront location with city connectivity
-- Terraced architecture for optimal views
-- Metro and transportation access
-- Urban convenience amenities
-- Beach lifestyle facilities
-- Modern connectivity features
-- Mixed-use development benefits`,
-    typology: ['Residential', 'Mixed-Use'],
-    status: 'Off-Plan',
+- URBNSURF wave technology
+- Dual wave systems
+- Professional coaching facilities
+- Equipment rental and sales
+- Surf school programs
+- Competition-ready facilities`,
+    typology: ['Surf Technology', 'Sports Training'],
+    status: 'Under Development',
     year: 2024,
-    location: 'HMR Waterfront',
-    area: '24,000 m2'
+    location: 'Bali Beach Sports Facility',
+    area: '8,000 m2',
+    features: ['Advanced Wave System', 'Recreational Waves', 'Surf School', 'Equipment Center'],
+    sustainability: ['Ocean Water Use', 'Energy-Efficient Systems', 'Zero Chemical Treatment']
+  },
+  
+  'beach-sports-arena': {
+    description: 'Mixed beach volleyball, tennis, cricket, soccer, and badminton in action. Bali\'s first multi-sport beach arena, hosting local and international events.',
+    aboutProject: `Where Sand Meets Skill - Bali's first multi-sport beach arena designed to host local and international events. This versatile facility accommodates multiple sports disciplines with professional-grade equipment and facilities.
+
+The arena is designed to meet international competition standards while remaining accessible to local communities and recreational users.
+
+Key Features:
+- Multi-sport configuration
+- Professional-grade equipment
+- International competition standards
+- Flexible court layouts
+- Spectator seating
+- Event hosting capabilities`,
+    typology: ['Multi-Sport Arena', 'Competition Venue'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '12,000 m2',
+    features: ['Beach Volleyball', 'Tennis Courts', 'Cricket Ground', 'Soccer Field', 'Badminton Courts'],
+    sustainability: ['Natural Sand Surfaces', 'Solar Lighting', 'Rainwater Collection']
+  },
+  
+  'racquet-sports-complex': {
+    description: 'Undercover and open-air courts for tennis, pickleball, and padel. Elite Courts for Every Passion designed for athletes, families, and local development.',
+    aboutProject: `Elite Courts for Every Passion - Designed for athletes, families, and local development. The racquet sports complex features both undercover and open-air courts for tennis, pickleball, and padel.
+
+The facility combines professional training environments with community accessibility, supporting both competitive athletes and recreational players.
+
+Key Features:
+- Professional-grade courts
+- Undercover and outdoor options
+- Multi-sport flexibility
+- Coaching facilities
+- Equipment rental
+- Tournament hosting`,
+    typology: ['Racquet Sports', 'Training Facility'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '6,000 m2',
+    features: ['Tennis Courts', 'Pickleball Courts', 'Padel Courts', 'Training Center'],
+    sustainability: ['Energy-Efficient Lighting', 'Natural Ventilation', 'Sustainable Materials']
+  },
+  
+  'extreme-sports-zone': {
+    description: 'Skate park, BMX ramps, ninja warrior course. Bali\'s New Hub for Youth and Action Sports designed for energy, performance, and adrenaline.',
+    aboutProject: `Bali's New Hub for Youth and Action Sports - Designed for energy, performance, and adrenaline. The extreme sports zone features world-class facilities for skateboarding, BMX, and ninja warrior training.
+
+This zone is designed to attract young athletes and action sports enthusiasts while providing safe, professional-grade facilities for skill development and competition.
+
+Key Features:
+- Professional skate park
+- BMX ramps and tracks
+- Ninja warrior course
+- Safety equipment
+- Coaching programs
+- Competition venues`,
+    typology: ['Action Sports', 'Youth Development'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '10,000 m2',
+    features: ['Skate Park', 'BMX Ramps', 'Ninja Warrior Course', 'Safety Equipment'],
+    sustainability: ['Recycled Materials', 'Energy-Efficient Lighting', 'Natural Shading']
+  },
+  
+  'digital-sports': {
+    description: 'eSports arena setup and interactive mixed reality workout areas. Where Gaming and Fitness Collide - Innovation meets movement in Bali\'s first digital sports hub.',
+    aboutProject: `Where Gaming and Fitness Collide - Innovation meets movement in Bali's first digital sports hub. The digital sports zone combines cutting-edge eSports facilities with interactive mixed reality fitness experiences.
+
+This forward-thinking facility bridges the gap between traditional sports and digital innovation, creating unique experiences that appeal to both gamers and fitness enthusiasts.
+
+Key Features:
+- Professional eSports arena
+- Mixed reality fitness zones
+- Gaming tournaments
+- Interactive training
+- Technology integration
+- Innovation showcase`,
+    typology: ['Digital Sports', 'eSports', 'Mixed Reality'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '4,000 m2',
+    features: ['eSports Arena', 'Mixed Reality Fitness', 'Gaming Tournaments', 'Interactive Training'],
+    sustainability: ['Energy-Efficient Equipment', 'Digital Innovation', 'Sustainable Technology']
+  },
+  
+  'wellness-and-fitness-zones': {
+    description: 'Gym, yoga decks, nature-integrated wellness pavilions. Mind. Body. Balance. For athletes, tourists, and recovery-focused guests.',
+    aboutProject: `Mind. Body. Balance. - For athletes, tourists, and recovery-focused guests. The wellness and fitness zones provide comprehensive facilities for physical training, mental wellness, and holistic health.
+
+The facility integrates traditional wellness practices with modern fitness technology, creating a unique environment that supports both athletic performance and personal wellness.
+
+Key Features:
+- Modern fitness equipment
+- Yoga and meditation spaces
+- Nature-integrated design
+- Personal training services
+- Wellness programs
+- Recovery facilities`,
+    typology: ['Wellness', 'Fitness', 'Recovery'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '8,000 m2',
+    features: ['Gym Equipment', 'Yoga Decks', 'Wellness Pavilions', 'Recovery Areas'],
+    sustainability: ['Natural Materials', 'Energy-Efficient Systems', 'Biophilic Design']
+  },
+  
+  'spa-and-recovery-centre': {
+    description: 'Massage, saunas, plunge pools, ice baths. Recover. Reset. Recharge. Elite performance facilities for full recovery and wellness.',
+    aboutProject: `Recover. Reset. Recharge. - Elite performance facilities for full recovery and wellness. The spa and recovery centre provides professional-grade facilities for athletes and wellness seekers.
+
+The facility combines traditional Balinese healing practices with modern recovery technology, offering comprehensive wellness services in a serene, natural setting.
+
+Key Features:
+- Professional massage services
+- Traditional and modern saunas
+- Plunge pools and ice baths
+- Recovery technology
+- Wellness consultations
+- Holistic treatments`,
+    typology: ['Spa', 'Recovery', 'Wellness'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '5,000 m2',
+    features: ['Massage Services', 'Saunas', 'Plunge Pools', 'Ice Baths', 'Recovery Technology'],
+    sustainability: ['Natural Healing', 'Energy-Efficient Systems', 'Local Therapies']
+  },
+  
+  'food-beverage-and-culinary-experience': {
+    description: 'Healthy food kiosks, local cuisine, dining terraces. From Bali\'s Soil to Your Plate - Locally sourced, nutritionally driven food experiences.',
+    aboutProject: `From Bali's Soil to Your Plate - Locally sourced, nutritionally driven food experiences. The culinary zone showcases Bali's rich food culture while providing healthy, sustainable dining options.
+
+The facility emphasizes farm-to-table practices, supporting local farmers and promoting sustainable food systems while offering diverse dining experiences for all visitors.
+
+Key Features:
+- Local cuisine focus
+- Healthy food options
+- Sustainable sourcing
+- Educational programs
+- Culinary workshops
+- Community dining`,
+    typology: ['Culinary', 'Dining', 'Education'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '6,000 m2',
+    features: ['Healthy Food Kiosks', 'Local Cuisine', 'Dining Terraces', 'Culinary Workshops'],
+    sustainability: ['Local Sourcing', 'Organic Practices', 'Zero Waste', 'Community Support']
+  },
+  
+  'eco-accommodation-and-lodging': {
+    description: 'Treehouse pods, bamboo villas, sports lodges. Stay Inspired - Bespoke sustainable living experiences for every visitor.',
+    aboutProject: `Stay Inspired - Bespoke sustainable living experiences for every visitor. The eco-accommodation zone offers unique lodging options that blend comfort with environmental responsibility.
+
+The facility features innovative sustainable architecture using local materials and traditional building techniques, creating authentic Balinese experiences with modern amenities.
+
+Key Features:
+- Sustainable architecture
+- Local materials
+- Traditional techniques
+- Modern amenities
+- Natural integration
+- Community connection`,
+    typology: ['Accommodation', 'Eco-Tourism', 'Sustainable Living'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: '15,000 m2',
+    features: ['Treehouse Pods', 'Bamboo Villas', 'Sports Lodges', 'Eco-Friendly Design'],
+    sustainability: ['Local Materials', 'Traditional Techniques', 'Natural Integration', 'Community Support']
+  },
+  
+  'sustainability-and-environmental-responsibility': {
+    description: 'Solar panels, water recycling systems, local concrete solutions. Built for a Sustainable Tomorrow - Ocean water use, solar energy, zero-carbon concrete, local materials.',
+    aboutProject: `Built for a Sustainable Tomorrow - Ocean water use, solar energy, zero-carbon concrete, local materials. The sustainability zone demonstrates cutting-edge environmental technologies and practices.
+
+This facility serves as a model for sustainable development, showcasing how large-scale sports facilities can operate with minimal environmental impact while supporting local communities.
+
+Key Features:
+- Solar energy systems
+- Water recycling
+- Zero-carbon materials
+- Local sourcing
+- Environmental education
+- Innovation showcase`,
+    typology: ['Sustainability', 'Environmental', 'Innovation'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: 'System-Wide',
+    features: ['Solar Panels', 'Water Recycling', 'Local Concrete', 'Environmental Systems'],
+    sustainability: ['Renewable Energy', 'Water Conservation', 'Carbon Reduction', 'Local Materials']
+  },
+  
+  'community-and-job-creation': {
+    description: 'Local teams working, training, and participating. Investing in People, Not Just Property - Over 400 jobs created. Local training. Community led.',
+    aboutProject: `Investing in People, Not Just Property - Over 400 jobs created. Local training. Community led. The community and job creation zone focuses on developing local talent and creating sustainable employment opportunities.
+
+The facility prioritizes local hiring, training programs, and community involvement, ensuring that the development benefits the surrounding communities while creating long-term economic opportunities.
+
+Key Features:
+- Local employment focus
+- Training programs
+- Community involvement
+- Skill development
+- Economic opportunities
+- Social impact`,
+    typology: ['Community Development', 'Job Creation', 'Social Impact'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: 'Community-Wide',
+    features: ['Local Employment', 'Training Programs', 'Community Involvement', 'Skill Development'],
+    sustainability: ['Social Sustainability', 'Economic Development', 'Community Support', 'Local Empowerment']
+  },
+  
+  'partnerships-and-global-recognition': {
+    description: 'FIVB, ITF, URBNSURF, Extreme, Global eSports Federations. Powered by the World\'s Most Visionary Brands - Backed by sport, tech, and performance leaders.',
+    aboutProject: `Powered by the World's Most Visionary Brands - Backed by sport, tech, and performance leaders. The partnerships zone showcases international collaborations with leading sports organizations and technology companies.
+
+These partnerships ensure world-class facilities, international standards, and access to cutting-edge technology and expertise from global leaders in their respective fields.
+
+Key Features:
+- International partnerships
+- World-class standards
+- Technology integration
+- Expert collaboration
+- Global recognition
+- Innovation leadership`,
+    typology: ['Partnerships', 'International', 'Innovation'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali Beach Sports Facility',
+    area: 'Facility-Wide',
+    features: ['FIVB Partnership', 'ITF Collaboration', 'URBNSURF Technology', 'Extreme Sports', 'eSports Federations'],
+    sustainability: ['International Standards', 'Technology Innovation', 'Expert Collaboration', 'Global Recognition']
+  },
+  
+  'final-section-call-to-action': {
+    description: 'Sunset wide shot of the facility. This is Not a Resort. It\'s a Revolution. Contact us to learn more, view our site plan, or schedule a walk-through.',
+    aboutProject: `This is Not a Resort. It's a Revolution. - Contact us to learn more, view our site plan, or schedule a walk-through.
+
+The Bali Beach Sports & Recreation Facility represents a paradigm shift in sustainable tourism and community development. This world-class facility combines cutting-edge sports technology with environmental responsibility, creating a model for future developments.
+
+Our facility is designed to serve both local communities and international visitors, creating over 400 jobs while preserving Bali's natural beauty through innovative sustainability practices.
+
+Key Features:
+- Revolutionary approach to sports tourism
+- Sustainable development model
+- Community-focused design
+- Environmental responsibility
+- Economic impact
+- Social innovation`,
+    typology: ['Revolution', 'Innovation', 'Sustainability'],
+    status: 'Under Development',
+    year: 2024,
+    location: 'Bali, Indonesia',
+    area: '50+ Hectares',
+    features: ['Revolutionary Design', 'Sustainable Model', 'Community Impact', 'Environmental Stewardship'],
+    sustainability: ['Paradigm Shift', 'Innovation Leadership', 'Community Development', 'Environmental Responsibility']
   }
 };
 
-// Generate static paths for all projects
+// Generate static paths for all projects (excluding project ID 15 which redirects to about page)
 export const getStaticPaths: GetStaticPaths = async (): Promise<GetStaticPathsResult> => {
-  const paths = projects.map((project) => {
-    const projectId = project.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-');
-    
-    return {
-      params: { 
-        id: projectId 
-      },
-      props: { 
-        projectInfo: project,
-        projectId: projectId
-      }
-    };
-  });
+  const paths = projects
+    .filter(project => project.id !== 15) // Exclude project ID 15 from static path generation
+    .map((project) => {
+      const projectId = project.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-');
+      
+      return {
+        params: { 
+          id: projectId 
+        },
+        props: { 
+          projectInfo: project,
+          projectId: projectId
+        }
+      };
+    });
   
   return paths;
 };
@@ -393,28 +458,30 @@ const { heroImage, galleryImages } = await loadProjectImages(projectInfo.locatio
 
 // Get project-specific content with proper type checking
 const content: ProjectContent = projectContent[projectId] || {
-  description: `A luxurious residential development offering modern living spaces with stunning views and world-class amenities.`,
-  aboutProject: `${projectInfo.name} represents a pinnacle of modern architectural design, seamlessly blending luxury living with sustainable practices. This prestigious development offers residents an unparalleled lifestyle experience with its thoughtfully designed spaces and premium amenities.
+  description: `A world-class sports and recreation facility offering cutting-edge technology with environmental responsibility.`,
+  aboutProject: `${projectInfo.name} represents a paradigm shift in sustainable sports tourism and community development. This revolutionary facility combines cutting-edge sports technology with environmental responsibility, creating a model for future developments.
 
-The project features state-of-the-art facilities including infinity pools, landscaped gardens, fitness centers, and 24/7 concierge services. Each unit has been meticulously planned to maximize natural light and ventilation while offering breathtaking views of the surrounding landscape.
+The facility is designed to serve both local communities and international visitors, creating over 400 jobs while preserving Bali's natural beauty through innovative sustainability practices.
 
 Key Features:
-- Premium location with easy access to major landmarks
-- Sustainable design with energy-efficient systems
-- High-end finishes and fixtures throughout
-- Smart home integration
-- Dedicated parking spaces
-- Community spaces for social gatherings`,
-  typology: ['Architecture', 'Residential'],
-  status: 'Available',
-  year: 2023,
-  location: `${projectInfo.location} Oceanfront`,
-  area: '15,000 m2'
+- World-class sports facilities
+- Sustainable development practices
+- Community-focused design
+- Environmental responsibility
+- Economic impact
+- Social innovation`,
+  typology: ['Sports Facility', 'Sustainable Development'],
+  status: 'Under Development',
+  year: 2024,
+  location: `${projectInfo.location}, Bali`,
+  area: '50+ Hectares',
+  features: ['World-Class Facilities', 'Sustainable Design', 'Community Impact'],
+  sustainability: ['Environmental Responsibility', 'Social Innovation', 'Economic Development']
 };
 
 const projectData: ProjectData = {
   id: projectId,
-  name: projectInfo.name,
+  name: projectInfo.headline || projectInfo.name,
   location: projectInfo.location,
   description: content.description,
   heroImage: {
