@@ -235,26 +235,26 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
             grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-[60px] items-center">
             
             {/* Section Header */}
-            <div className="flex flex-col gap-5 text-left lg:text-left">
-              <span className="text-sm text-neutral-500 font-medium">
-                {section.number}
-              </span>
-              <h2 className="text-7xl font-semibold leading-tight text-neutral-800 m-0">
-                {section.name}
-              </h2>
-              <p className="text-lg text-neutral-600 font-normal">
-                {section.category}
+            <div className="flex flex-col gap-4 sm:gap-5 text-left px-4 sm:px-6 md:px-8">
+            <span className="text-xs sm:text-sm text-neutral-500 font-medium">
+              {section.number}
+            </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight text-neutral-800 m-0">
+              {section.name}
+            </h2>
+            <p className="text-base sm:text-lg text-neutral-600 font-normal">
+              {section.category}
+            </p>
+            
+            {/* Headlines */}
+            <div className="mt-3 sm:mt-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-neutral-800 mb-1 sm:mb-2 leading-tight">
+                {section.headline}
+              </h3>
+              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+                {section.subheadline}
               </p>
-              
-              {/* Headlines */}
-              <div className="mt-4">
-                <h3 className="text-2xl font-semibold text-neutral-800 mb-2 leading-tight">
-                  {section.headline}
-                </h3>
-                <p className="text-lg text-neutral-600 leading-relaxed">
-                  {section.subheadline}
-                </p>
-              </div>
+            </div>
               
               {/* Mobile View Details Button */}
               <div className="mt-6 lg:hidden">
