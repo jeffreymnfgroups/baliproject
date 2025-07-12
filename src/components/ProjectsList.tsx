@@ -72,7 +72,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
       threshold: [0.3, 0.7] // Multiple thresholds for better detection
     };
 
-    observerRef.current = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+    observerRef.current = new IntersectionObserver((entries) => {
       // Only process if not currently scrolling programmatically
       if (isScrolling) return;
 
@@ -80,7 +80,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ projects, emaarProjects, hm
       let mostVisibleEntry: IntersectionObserverEntry | null = null;
 
       // Find the most visible section
-      entries.forEach((entry: IntersectionObserverEntry) => {
+      entries.forEach((entry) => {
         if (entry.intersectionRatio > maxIntersectionRatio) {
           maxIntersectionRatio = entry.intersectionRatio;
           mostVisibleEntry = entry;

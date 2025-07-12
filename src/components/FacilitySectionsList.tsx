@@ -161,9 +161,14 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
     }
   }, [currentIndex, sections.length, scrollToSection, isScrolling]);
 
-  // Generate section URL
+  // Generate section URL - maps to corresponding project page
   const getSectionUrl = useCallback((section: FacilitySection) => {
-    return `#section-${section.id}`;
+    // Special case: Section ID 15 (Call to Action) redirects to about page
+    if (section.id === 15) {
+      return '/about';
+    }
+    // Map facility section to corresponding project page
+    return `/projects/${section.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-')}`;
   }, []);
 
   // Initialize everything
@@ -250,6 +255,20 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
                   {section.subheadline}
                 </p>
               </div>
+              
+              {/* Mobile View Details Button */}
+              <div className="mt-6 lg:hidden">
+                <a 
+                  href={getSectionUrl(section)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-black hover:bg-gray-800 text-white no-underline 
+                    rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
+                >
+                  <span>{section.id === 15 ? 'About Us' : 'View Details'}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
             </div>
             
             {/* Image Container */}
@@ -281,18 +300,16 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
             
             {/* Desktop Details Button */}
             <div className="col-span-full text-center mt-10 hidden lg:block">
-              <button 
-                onClick={() => {
-                  const message = `Hi! I'm interested in learning more about the ${section.name} section of the Bali Beach Sports & Recreation Facility. Could you provide more details about this feature?`;
-                  const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
-                  window.open(whatsappUrl, '_blank');
-                }}
-                className="inline-block px-10 py-4 bg-[#121212] text-white no-underline 
-                  rounded-lg font-medium transition-all duration-300 hover:bg-black 
-                  hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform cursor-pointer border-none"
+              <a 
+                href={getSectionUrl(section)}
+                className="inline-flex items-center gap-2 px-10 py-4 bg-[#121212] hover:bg-black text-white no-underline 
+                  rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
               >
-                Get More Info About {section.name}
-              </button>
+                <span>{section.id === 15 ? 'About Us' : `Get More Info About ${section.name}`}</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
             </div>
           </div>
 
