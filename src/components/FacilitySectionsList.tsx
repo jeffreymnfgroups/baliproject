@@ -163,7 +163,7 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
 
   // Generate section URL
   const getSectionUrl = useCallback((section: FacilitySection) => {
-    return `/facility/${section.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-')}`;
+    return `#section-${section.id}`;
   }, []);
 
   // Initialize everything
@@ -281,14 +281,18 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
             
             {/* Desktop Details Button */}
             <div className="col-span-full text-center mt-10 hidden lg:block">
-              <a 
-                href={getSectionUrl(section)}
+              <button 
+                onClick={() => {
+                  const message = `Hi! I'm interested in learning more about the ${section.name} section of the Bali Beach Sports & Recreation Facility. Could you provide more details about this feature?`;
+                  const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
                 className="inline-block px-10 py-4 bg-[#121212] text-white no-underline 
                   rounded-lg font-medium transition-all duration-300 hover:bg-black 
-                  hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
+                  hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform cursor-pointer border-none"
               >
-                Learn More About {section.name}
-              </a>
+                Get More Info About {section.name}
+              </button>
             </div>
           </div>
 

@@ -1,19 +1,20 @@
 // src/data/facility-sections.js - Facility sections data
-import heroAerialImg from '../assets/facility/hero-aerial.webp';
-import waterparkImg from '../assets/facility/waterpark.webp';
-import surfMachinesImg from '../assets/facility/surf-machines.webp';
-import beachSportsImg from '../assets/facility/beach-sports.webp';
-import racquetSportsImg from '../assets/facility/racquet-sports.webp';
-import extremeSportsImg from '../assets/facility/extreme-sports.webp';
-import digitalSportsImg from '../assets/facility/digital-sports.webp';
-import wellnessImg from '../assets/facility/wellness.webp';
-import spaRecoveryImg from '../assets/facility/spa-recovery.webp';
-import culinaryImg from '../assets/facility/culinary.webp';
-import accommodationImg from '../assets/facility/accommodation.webp';
-import sustainabilityImg from '../assets/facility/sustainability.webp';
-import communityImg from '../assets/facility/community.webp';
-import partnershipsImg from '../assets/facility/partnerships.webp';
-import finalImg from '../assets/facility/final-sunset.webp';
+// Using existing project images as placeholders for Bali facility
+import heroAerialImg from '../assets/projects/emaar/panorama/main-image.webp';
+import waterparkImg from '../assets/projects/emaar/panorama/gallery-1.webp';
+import surfMachinesImg from '../assets/projects/emaar/the-views/main-image.webp';
+import beachSportsImg from '../assets/projects/emaar/park-edge/main-image.webp';
+import racquetSportsImg from '../assets/projects/emaar/coral-towers/main-image.webp';
+import extremeSportsImg from '../assets/projects/emaar/pearl-reef-towers/main-image.webp';
+import digitalSportsImg from '../assets/projects/hmr/aa-waterfront/main-image.webp';
+import wellnessImg from '../assets/projects/hmr/gold-crest-residence/main-image.webp';
+import spaRecoveryImg from '../assets/projects/hmr/hs-residence/main-image.webp';
+import culinaryImg from '../assets/projects/hmr/h1-tower/main-image.webp';
+import accommodationImg from '../assets/projects/hmr/saima-marina/main-image.webp';
+import sustainabilityImg from '../assets/projects/hmr/saima-waterfront/main-image.webp';
+import communityImg from '../assets/projects/hmr/beach-terraces-by-metro/main-image.webp';
+import partnershipsImg from '../assets/projects/emaar/panorama/gallery-2.webp';
+import finalImg from '../assets/projects/emaar/panorama/gallery-3.webp';
 
 export const facilitySections = [
   {
@@ -149,7 +150,7 @@ export const facilitySections = [
     category: 'Contact',
     image: finalImg,
     headline: "This is Not a Resort. It's a Revolution.",
-    subheadline: 'Contact us to learn more, view our site plan, or schedule a walk-through'
+    subheadline: 'Contact us to learn more about investment opportunities, view our site plan, or schedule a facility walk-through'
   }
 ];
 

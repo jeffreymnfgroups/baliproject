@@ -11,14 +11,14 @@ const currentPath = Astro.url.pathname;
 
 // Enhanced SEO meta data for the facility
 const seoData = {
-  title: "Bali Beach Sports & Recreation Facility - Future of Global Beach Sport & Wellness Tourism",
-  description: "Discover Bali's revolutionary beach sports and recreation facility featuring world-class surf machines, waterpark, extreme sports, wellness centers, and sustainable eco-accommodation. A community-focused destination creating 400+ jobs.",
+  title: "Bali Beach Sports & Recreation Facility - Investment Opportunity in Global Beach Sport & Wellness Tourism",
+  description: "Investment opportunity in Bali's revolutionary beach sports and recreation facility featuring world-class surf machines, waterpark, extreme sports, wellness centers, and sustainable eco-accommodation. A community-focused destination creating 400+ jobs with strong ROI potential.",
   keywords: "Bali beach sports, recreation facility, surf machines, waterpark, extreme sports, wellness center, sustainable tourism, community development, beach volleyball, eSports arena, spa recovery, eco accommodation",
   image: "/og-facility.jpg"
 };
 
 // Import slideshow images for facility sections
-const slideshowImageModules = import.meta.glob<{ default: ImageMetadata }>('../assets/facility/slideshow/*.{webp,jpg,jpeg,png}', { eager: true });
+const slideshowImageModules = import.meta.glob<{ default: ImageMetadata }>('../assets/projects/slideshow/*.{webp,jpg,jpeg,png}', { eager: true });
 
 // Format images for the slideshow component
 let formattedSlideshowImages: Array<{ src: string; alt: string }> = [];
@@ -51,14 +51,15 @@ if (formattedSlideshowImages.length === 0) {
 // Structured data for the facility
 const facilityStructuredData = {
   "@context": "https://schema.org",
-  "@type": "TouristAttraction",
+  "@type": "InvestmentOpportunity",
   "name": "Bali Beach Sports & Recreation Facility",
   "description": seoData.description,
-  "url": "https://www.balibeachsports.com/",
+  "url": "https://www.binyousufgroup.com/",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "Indonesia",
-    "addressRegion": "Bali"
+    "addressRegion": "Bali",
+    "addressLocality": "Canggu"
   },
   "amenityFeature": facilitySections.map((section) => ({
     "@type": "LocationFeatureSpecification",
@@ -86,7 +87,7 @@ const facilityStructuredData = {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://www.balibeachsports.com/"
+        "item": "https://www.binyousufgroup.com/"
       }
     ]
   }

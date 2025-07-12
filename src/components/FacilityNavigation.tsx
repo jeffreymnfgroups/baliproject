@@ -88,8 +88,8 @@ const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) 
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility. Could you please provide me with more information?";
-    const whatsappUrl = `https://wa.me/+6281234567890?text=${encodeURIComponent(message)}`;
+    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility project. Could you please provide me with more information about investment opportunities and facility details?";
+    const whatsappUrl = `https://wa.me/923360878079?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     
     // Close mobile menu if open

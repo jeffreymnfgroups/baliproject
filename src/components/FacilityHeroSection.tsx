@@ -69,7 +69,7 @@ const FacilityHeroSection: React.FC = () => {
             maxWidth: '80vw' // On mobile, max width is 80% of viewport width
           }}
         >
-          Beach Sports & Recreation Facility • Surf • Wellness • Community
+          World-Class Beach Sports & Recreation Facility • Surf • Wellness • Community Investment
         </div>
       </div>
     </main>
