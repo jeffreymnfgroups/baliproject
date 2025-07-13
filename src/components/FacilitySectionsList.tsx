@@ -1,4 +1,4 @@
-// src/components/FacilitySectionsList.tsx
+// src/components/FacilitySectionsList.tsx - Full-screen immersive sections
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -16,68 +16,31 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<HTMLElement[]>([]);
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isInitializedRef = useRef(false);
 
-  // Debounced scroll handler to prevent excessive state updates
-  const debouncedSetCurrentIndex = useCallback((index: number) => {
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
-    
-    scrollTimeoutRef.current = setTimeout(() => {
-      setCurrentIndex(index);
-    }, 100);
-  }, []);
+  const handleContactClick = () => {
+    const message = "Hi! I'm interested in learning more about the Bali Beach Sports & Recreation Facility. Could you please provide more information about investment opportunities?";
+    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
-  // Handle initial scroll based on URL hash (only once on page load)
-  const handleInitialScroll = useCallback(() => {
-    if (isInitializedRef.current) return;
-    
-    const hash = window.location.hash;
-    if (hash) {
-      // Use requestAnimationFrame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        const targetElement = document.querySelector(hash);
-        if (targetElement) {
-          const sectionIndex = parseInt((targetElement as HTMLElement).dataset.sectionIndex || '0');
-          if (!isNaN(sectionIndex)) {
-            setCurrentIndex(sectionIndex);
-            
-            // Smooth scroll to element without changing URL
-            targetElement.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'start',
-              inline: 'nearest'
-            });
-          }
-        }
-      });
-    }
-    isInitializedRef.current = true;
-  }, []);
-
-  // Setup intersection observer with optimized settings
+  // Setup intersection observer
   const setupIntersectionObserver = useCallback(() => {
-    // Clean up existing observer
     if (observerRef.current) {
       observerRef.current.disconnect();
     }
 
     const options: IntersectionObserverInit = {
       root: null,
-      rootMargin: '-20% 0px -20% 0px', // More conservative margins
-      threshold: [0.3, 0.7] // Multiple thresholds for better detection
+      rootMargin: '-20% 0px -20% 0px',
+      threshold: [0.3, 0.7]
     };
 
     observerRef.current = new IntersectionObserver((entries) => {
-      // Only process if not currently scrolling programmatically
       if (isScrolling) return;
 
       let maxIntersectionRatio = 0;
       let mostVisibleEntry: IntersectionObserverEntry | null = null;
 
-      // Find the most visible section
       entries.forEach(entry => {
         if (entry.intersectionRatio > maxIntersectionRatio) {
           maxIntersectionRatio = entry.intersectionRatio;
@@ -90,123 +53,49 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
         const sectionIndex = parseInt(target.dataset.sectionIndex || '0');
         
         if (!isNaN(sectionIndex)) {
-          debouncedSetCurrentIndex(sectionIndex);
+          setCurrentIndex(sectionIndex);
         }
       }
     }, options);
 
-    // Observe all sections
     sectionsRef.current.forEach(section => {
       if (section && observerRef.current) {
         observerRef.current.observe(section);
       }
     });
-  }, [isScrolling, debouncedSetCurrentIndex]);
-
-  // Optimized scroll to section function
-  const scrollToSection = useCallback((index: number) => {
-    if (index < 0 || index >= sectionsRef.current.length || isScrolling) return;
-    
-    const targetSection = sectionsRef.current[index];
-    if (!targetSection) return;
-
-    setIsScrolling(true);
-    
-    // Use GSAP for smooth, controlled scrolling
-    gsap.to(window, {
-      duration: 1.2,
-      scrollTo: { 
-        y: targetSection, 
-        offsetY: 0
-      },
-      ease: "power2.inOut",
-      onComplete: () => {
-        // Add delay to prevent immediate intersection observer conflicts
-        setTimeout(() => {
-          setIsScrolling(false);
-        }, 200);
-      }
-    });
   }, [isScrolling]);
 
-  // Handle navigation clicks
-  const handleNavigationClick = useCallback((e: Event) => {
-    const target = e.target as HTMLElement;
-    const link = target.closest('a[href^="#"]') as HTMLAnchorElement;
-    
-    if (!link) return;
-    
-    e.preventDefault();
-    const section = link.getAttribute('href')?.substring(1);
-    
-    if (section?.startsWith('section-')) {
-      const sectionId = section.replace('section-', '');
-      const sectionIndex = sections.findIndex(s => s.id.toString() === sectionId);
-      if (sectionIndex !== -1) {
-        scrollToSection(sectionIndex);
-      }
-    }
-  }, [sections, scrollToSection]);
-
-  // Keyboard navigation
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (isScrolling) return;
-    
-    if (e.key === 'ArrowDown' && currentIndex < sections.length - 1) {
-      e.preventDefault();
-      scrollToSection(currentIndex + 1);
-    } else if (e.key === 'ArrowUp' && currentIndex > 0) {
-      e.preventDefault();
-      scrollToSection(currentIndex - 1);
-    }
-  }, [currentIndex, sections.length, scrollToSection, isScrolling]);
-
-  // Generate section URL - maps to corresponding project page
-  const getSectionUrl = useCallback((section: FacilitySection) => {
-    // Special case: Section ID 15 (Call to Action) redirects to about page
-    if (section.id === 15) {
-      return '/about';
-    }
-    // Map facility section to corresponding project page
-    return `/projects/${section.name.toLowerCase().replace(/[\s&]/g, '-').replace(/--+/g, '-')}`;
-  }, []);
-
-  // Initialize everything
   useEffect(() => {
-    handleInitialScroll();
-    
-    // Small delay to ensure DOM is fully rendered
-    const initTimeout = setTimeout(() => {
-      setupIntersectionObserver();
-    }, 100);
-
-    return () => {
-      clearTimeout(initTimeout);
-    };
-  }, [handleInitialScroll, setupIntersectionObserver]);
-
-  // Add event listeners
-  useEffect(() => {
-    document.addEventListener('click', handleNavigationClick);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('click', handleNavigationClick);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [handleNavigationClick, handleKeyDown]);
-
-  // Cleanup on unmount
-  useEffect(() => {
+    setupIntersectionObserver();
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
     };
-  }, []);
+  }, [setupIntersectionObserver]);
+
+  // Get high-quality placeholder images for each section
+  const getSectionImage = (section: FacilitySection) => {
+    const imageMap: Record<string, string> = {
+      'Hero Aerial View': 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Waterpark': 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Dual Surf Machines': 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Beach Sports Arena': 'https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Racquet Sports Complex': 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Extreme Sports Zone': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Digital Sports': 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Wellness and Fitness Zones': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Spa and Recovery Centre': 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Food, Beverage and Culinary Experience': 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Eco-Accommodation and Lodging': 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Sustainability and Environmental Responsibility': 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Community and Job Creation': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Partnerships and Global Recognition': 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+      'Final Section ': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
+    };
+
+    return imageMap[section.name] || section.image.src;
+  };
 
   return (
     <div 
@@ -220,103 +109,114 @@ const FacilitySectionsList: React.FC<FacilitySectionsListProps> = ({ sections })
           ref={el => { 
             if (el) sectionsRef.current[index] = el; 
           }}
-          className={`
-            min-h-screen w-full flex items-center justify-center relative
-            ${index % 2 === 1 ? 'bg-neutral-50' : 'bg-white'}
-            transition-colors duration-300
-          `}
+          className="relative min-h-screen w-full flex items-center justify-center overflow-hidden"
           id={`section-${section.id}`}
           data-section-id={section.id}
           data-section-name={section.name}
           data-section-category={section.category.toLowerCase()}
           data-section-index={index}
         >
-          <div className="w-full max-w-[1400px] mx-auto px-4 py-[60px] 
-            grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-[60px] items-center">
+          {/* Full-screen Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url('${getSectionImage(section)}')`
+            }}
+          />
+
+          {/* Content Overlay */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 text-center text-white">
             
-            {/* Section Header */}
-            <div className="flex flex-col gap-4 sm:gap-5 text-left px-4 sm:px-6 md:px-8">
-            <span className="text-xs sm:text-sm text-neutral-500 font-medium">
-              {section.number}
-            </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-tight text-neutral-800 m-0">
-              {section.name}
+            {/* Section Number */}
+            <div className="mb-6">
+              <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium tracking-wider">
+                {section.number}
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
+              {section.headline}
             </h2>
-            <p className="text-base sm:text-lg text-neutral-600 font-normal">
-              {section.category}
+
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl lg:text-3xl font-light mb-8 max-w-4xl mx-auto leading-relaxed text-white/90">
+              {section.subheadline}
             </p>
-            
-            {/* Headlines */}
-            <div className="mt-3 sm:mt-4">
-              <h3 className="text-xl sm:text-2xl font-semibold text-neutral-800 mb-1 sm:mb-2 leading-tight">
-                {section.headline}
-              </h3>
-              <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
-                {section.subheadline}
-              </p>
+
+            {/* Category Badge */}
+            <div className="mb-12">
+              <span className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500/80 to-cyan-400/80 backdrop-blur-sm rounded-full text-lg font-medium">
+                {section.category}
+              </span>
             </div>
-              
-              {/* Mobile View Details Button */}
-              <div className="mt-6 lg:hidden">
-                <a 
-                  href={getSectionUrl(section)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-black hover:bg-gray-800 text-white no-underline 
-                    rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
-                >
-                  <span>{section.id === 15 ? 'About Us' : 'View Details'}</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            
-            {/* Image Container */}
-            <a 
-              href={getSectionUrl(section)}
-              className="w-full relative block no-underline text-inherit transition-all 
-                duration-500 ease-out group hover:-translate-y-2 focus:outline-none 
-                focus:ring-4 focus:ring-blue-500/20"
-            >
-              <div className="relative w-full overflow-hidden rounded-2xl 
-                shadow-[0_40px_80px_rgba(0,0,0,0.15)] group-hover:shadow-[0_50px_100px_rgba(0,0,0,0.2)]
-                transition-shadow duration-500">
-                
-                {/* Desktop: Standard container */}
-                <div className="relative w-full h-[60vh]">
-                  <img
-                    src={section.image.src}
-                    alt={section.name}
-                    className="absolute inset-0 w-full h-full object-cover object-center 
-                      transition-transform duration-700 ease-out group-hover:scale-105"
-                    loading={index < 2 ? "eager" : "lazy"}
-                  />
+
+            {/* Call to Action - Special handling for final section */}
+            {section.id === 15 ? (
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                  <button
+                    onClick={handleContactClick}
+                    className="group relative inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-gray-100 hover:scale-105 hover:shadow-2xl"
+                  >
+                    <span>Contact Us</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                  
+                  <a
+                    href="/about"
+                    className="group inline-flex items-center gap-3 border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white hover:text-black hover:scale-105"
+                  >
+                    <span>View Site Plan</span>
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
                 </div>
                 
-                {/* Overlay for better interaction feedback */}
-                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
+                {/* Contact Info */}
+                <div className="flex flex-col sm:flex-row gap-8 justify-center items-center text-white/80 mt-8">
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span>+62 812 3456 7890</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>info@balibeachsports.com</span>
+                  </div>
+                </div>
               </div>
-            </a>
-            
-            {/* Desktop Details Button */}
-            <div className="col-span-full text-center mt-10 hidden lg:block">
-              <a 
-                href={getSectionUrl(section)}
-                className="inline-flex items-center gap-2 px-10 py-4 bg-[#121212] hover:bg-black text-white no-underline 
-                  rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 transform backface-visibility-hidden will-change-transform"
+            ) : (
+              <button
+                onClick={() => {
+                  if (index < sections.length - 1) {
+                    document.getElementById(`section-${sections[index + 1].id}`)?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="group inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:bg-white/30 hover:scale-105"
               >
-                <span>{section.id === 15 ? 'About Us' : `Get More Info About ${section.name}`}</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <span>Explore More</span>
+                <svg className="w-4 h-4 group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
-              </a>
-            </div>
+              </button>
+            )}
           </div>
 
           {/* Progress indicator */}
-          <div className="absolute bottom-8 right-8 text-sm text-neutral-400 font-medium">
+          <div className="absolute bottom-8 right-8 text-white/60 text-sm font-medium">
             {String(index + 1).padStart(2, '0')} / {String(sections.length).padStart(2, '0')}
           </div>
+
+          {/* Floating decorative elements */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-blue-400/20 rounded-full blur-xl animate-pulse delay-1000"></div>
         </section>
       ))}
     </div>

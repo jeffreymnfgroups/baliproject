@@ -1,5 +1,5 @@
 ---
-// src/layouts/Layout.astro - Updated without WhatsApp button
+// src/layouts/Layout.astro - Enhanced layout for sports facility
 import Footer from '../components/Footer.tsx';
 import StickyWhatsAppButton from '../components/StickyWhatsAppButton.tsx';
 import logoImage from '../assets/projects/logo.webp';
@@ -9,7 +9,7 @@ export interface Props {
   description?: string;
 }
 
-const { title, description = "Bali Beach Sports & Recreation Facility - Global Beach Sport & Wellness Tourism" } = Astro.props;
+const { title, description = "Bali Beach Sports & Recreation Facility - World's First Fully Integrated Beach Sports Arena" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -20,14 +20,27 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href={logoImage.src} type="image/webp" />
     
-    <!-- Preload critical fonts to prevent layout shift -->
+    <!-- Preload critical fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Prevent layout shift on initial load -->
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.balibeachsports.com/">
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="https://www.balibeachsports.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.balibeachsports.com/">
+    <meta property="twitter:title" content={title}>
+    <meta property="twitter:description" content={description}>
+    <meta property="twitter:image" content="https://www.balibeachsports.com/og-image.jpg">
+    
+    <!-- Critical CSS to prevent layout shift -->
     <style>
-      /* Critical CSS to prevent navbar movement */
       * {
         box-sizing: border-box;
         margin: 0;
@@ -35,11 +48,11 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
       }
       
       body {
-        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         overflow-x: hidden;
-        background: white;
+        background: #000;
         line-height: 1.6;
-        color: #333;
+        color: #fff;
       }
       
       /* Ensure navigation is stable from the start */
@@ -48,21 +61,13 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
         top: 0;
         left: 0;
         right: 0;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
         z-index: 1000;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         will-change: transform;
       }
       
-      /* Reserve space for fixed navigation */
-      main {
-        padding-top: 0px;
-      }
-      
       /* Prevent font swapping issues */
-      .font-poppins {
-        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      .font-inter {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
       }
       
       /* Prevent initial content shift */
@@ -70,7 +75,6 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
         visibility: hidden;
       }
       
-      /* Show content after hydration */
       [data-hydrated] {
         visibility: visible;
       }
@@ -79,13 +83,19 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
       .loaded * {
         transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        transition-duration: 150ms;
+        transition-duration: 300ms;
+      }
+
+      /* Full viewport height support */
+      .min-h-screen {
+        min-height: 100vh;
+        min-height: 100dvh;
       }
     </style>
     
     <title>{title}</title>
   </head>
-  <body data-hydrating>
+  <body data-hydrating class="bg-black text-white">
     <slot />
     
     <!-- Footer Component -->
@@ -117,6 +127,13 @@ const { title, description = "Bali Beach Sports & Recreation Facility - Global B
           document.body.classList.add('loaded');
         }, 200);
       });
+
+      // Smooth scroll polyfill for older browsers
+      if (!('scrollBehavior' in document.documentElement.style)) {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/gh/iamdustan/smoothscroll@master/src/smoothscroll.js';
+        document.head.appendChild(script);
+      }
     </script>
   </body>
 </html>
