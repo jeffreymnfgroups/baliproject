@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://www.binyousufgroup.com',
+  site: 'https://baliproject.vercel.app',
   
   integrations: [
     react(),
