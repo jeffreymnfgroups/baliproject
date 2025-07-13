@@ -9,7 +9,7 @@ interface FacilityNavigationProps {
 
 const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [sectionCounts, setSectionCounts] = useState({ attractions: 0, sports: 0, wellness: 0, innovation: 0, total: 15 });
+  const [sectionCounts, setSectionCounts] = useState<{ attractions: number; sports: number; wellness: number; innovation: number; total: number }>({ attractions: 0, sports: 0, wellness: 0, innovation: 0, total: 15 });
   const [isClient, setIsClient] = useState(false);
 
   const isHomePage = currentPath === '/' || currentPath === '';
@@ -100,7 +100,7 @@ const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) 
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-[10px] z-[1000] border-b border-black/10 will-change-transform">
-      <div className="flex justify-between items-center max-w-[1400px] mx-auto px-6 py-4">
+      <div className="flex justify-between items-center max-w-[1400px] mx-auto px-4 py-3 md:px-6 md:py-4">
         <div className="flex items-center gap-5">
           <a 
             href="/" 
@@ -159,7 +159,7 @@ const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) 
         </div>
 
         {/* Mobile Hamburger Menu */}
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center md:hidden">
           {/* Hamburger Button */}
           <button
             id="hamburgerBtn"
@@ -168,7 +168,7 @@ const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) 
             }`}
             aria-label="Toggle navigation"
             onClick={toggleMenu}
-            style={{ minWidth: '40px', minHeight: '40px' }}
+            style={{ minWidth: '44px', minHeight: '44px' }}
           >
             <span className={`w-5 h-0.5 bg-neutral-800 transition-all duration-300 rounded-[1px] ${
               isMenuOpen ? 'transform rotate-45 translate-x-[6px] translate-y-[6px]' : ''
@@ -186,7 +186,7 @@ const FacilityNavigation: React.FC<FacilityNavigationProps> = ({ currentPath }) 
       {/* Mobile Menu Overlay */}
       <div
         id="mobileMenu"
-        className={`fixed top-20 left-0 right-0 bg-white backdrop-blur-[20px] border-b border-black/10
+        className={`fixed top-30 left-0 right-0 bg-white backdrop-blur-[20px] border-b border-black/10
           transform transition-all duration-300 ease-out -shadow-[0_10px_30px_rgba(0,0,0,0.1)] md:hidden
           ${isMenuOpen 
             ? 'translate-y-0 opacity-100 visible' 
