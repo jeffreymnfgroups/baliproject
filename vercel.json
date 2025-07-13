@@ -1,0 +1,29 @@
+{
+  "rewrites": [
+    {
+      "source": "/projects",
+      "destination": "/"
+    },
+    {
+      "source": "/projects/",
+      "destination": "/"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/projects",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "functions": {
+    "src/pages/projects/[id].astro": {
+      "maxDuration": 10
+    }
+  }
+} 
